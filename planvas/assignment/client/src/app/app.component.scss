@@ -1,0 +1,10 @@
+// This tells the app to use the full height and width
+// of the browser window.
+:host {
+  position: fixed;
+  top:0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+}

@@ -1,0 +1,10 @@
+{
+  "assignment": {
+    "public": {
+      "dateFormat": "dd-MMM-y",
+      "momentDateFormat": "DD-MMM-YYYY",
+      "subjectMaxLength": 30,
+      "detailsMaxLength": 100
+    }
+  }
+}

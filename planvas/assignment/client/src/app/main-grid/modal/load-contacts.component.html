@@ -1,0 +1,18 @@
+<div class="load-contacts">
+
+  <div class="modal-header">
+    <h5 class="modal-title">List of Contacts</h5>
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            (click)="cancel()"></button>
+  </div>
+
+  <div class="modal-body">
+    <div *ngFor="let contact of contacts"
+         class="row">
+      <div class="col-auto">{{ contact }}</div>
+    </div>
+  </div>
+
+</div>

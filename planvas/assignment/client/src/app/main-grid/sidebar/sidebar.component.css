@@ -1,0 +1,304 @@
+.todo-container {
+  flex: 0 0 330px; /* Fixed width */
+  overflow-y: auto;  /* Enable vertical scrolling */
+  overflow-x: hidden; /* Hide horizontal scrolling, if any */
+  padding:10px;
+  background-color: #000;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  transition: width 0.3s ease; /* Smooth transition */
+}
+
+.todo-container::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.todo-container::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Rounded edges */
+}
+
+.todo-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Thumb color on hover */
+}
+
+.todo-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Scrollbar track color */
+}
+
+.todo-container .sidebar {
+  width: 100%; /* Full width of the todo-container */
+  margin: 0 auto; /* Center alignment if needed */
+  background-color: #333333;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.todo-container.minimized {
+  width:70px;
+  height: 100vh;
+  background-color: #333333;
+  display: flex; /* Don't set display: none */
+  justify-content: center;
+  align-items: center;
+  z-index: 20; /* Make sure it sits above other elements */
+  transition: width 0.3s ease; /* Smooth transition for resizing */
+}
+
+.sidebar.minimized {
+  display:none;
+  transition: width 0.3s ease;
+}
+.todo-container.minimized .title {
+  display: none; /* Hides the title when minimized */
+}
+
+.sidebar.expanded {
+  width: 100%; /* Full width when expanded */
+  max-width: 400px; /* Optional max width for the sidebar */
+  transition: width 0.3s ease;
+}
+
+.plus-btn {
+  display: none; /* Initially hide the plus button */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #333333;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.todo-container.expanded {
+  flex: 0 0 330px; /* Fixed width */
+  background-color: #000;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.sidebar {
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  transition: width 0.3s ease;
+}
+.sidebar-title {
+  font-size: 1.75rem;
+  text-align: center;
+}
+
+.assignment-table {
+  max-height: calc(100vh - 18rem); /* Adjust space for title and padding */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  padding-right: 8px; /* Space for the scrollbar */
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+.assignment-table::-webkit-scrollbar {
+  width: 8px;
+}
+
+.assignment-table::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar thumb color */
+  border-radius: 4px;
+}
+
+.assignment-table::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.assignment-table::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Scrollbar track color */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.sidebar-title .pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #333333;
+  border-top: 1px solid #ccc;
+}
+
+.pagination-controls button {
+  background-color: #7a5cff;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  opacity: 1; /* Ensures buttons are always visible */
+}
+.pagination-controls button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6; /* Slightly reduced opacity when disabled */
+}
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #7a5cff;
+  transform: scale(1.05);
+}
+
+.pagination-controls span {
+  font-size: 14px;
+  color:white;
+}
+
+.pagination-controls .fa-icon {
+  margin-left: 5px;
+}
+
+thead th {
+  background-color: transparent;
+  color: #7a5cff;
+  text-align: left;
+  padding: 0.75rem;
+}
+
+tbody tr:hover {
+  background-color: rgba(51, 51, 51, 0.9);
+}
+
+td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.9);
+}
+
+.controls {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn {
+  background-color: #4a4a4a;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+
+}
+
+.btn:hover {
+  background-color: #6a6a6a;
+}
+
+.btn:disabled {
+  background-color: #2a2a2a;
+  cursor: not-allowed;
+}
+.minimize-btn {
+  position:absolute;
+  top: 10px; /* Distance from the top */
+  left: 10px; /* Distance from the left */
+  width: 40px;
+  background-color: black;
+  text-align: center;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 100; /* Ensure the button appears on top of other elements */
+}
+.plus-btn {
+  position:absolute;
+  top: 30px;
+  left: 30px;
+  background-color: #333333;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.todo-container.minimized .plus-btn {
+  display: block;
+}
+
+.todo-container.minimized .minimize-btn{
+  display:none;
+}
+
+/* Style for the import button */
+.import-btn {
+  cursor: pointer;
+  position: relative; /* Make the button position relative for dropdown positioning */
+}
+
+/* Style for the dropdown menu */
+.dropdown-menu {
+  display: none; /* Initially hidden */
+  position: absolute;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  z-index: 20; /* Ensure it appears above other content */
+  width: 20%;
+}
+
+/* Style for each item in the dropdown */
+.dropdown-item {
+  background-color: #4a4a4a;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  margin: 5px 0;
+}
+
+.dropdown-item:hover {
+  background-color: #6a6a6a;
+}
+
+/* Show the dropdown when the import button is clicked */
+.show-dropdown {
+  display: block;
+}
+.completed {
+  background-color: #f2f2f2; /* Light gray background */
+  color: #a0a0a0; /* Gray text */
+  text-decoration: line-through;
+}
+
+.assignment-table .table td:nth-child(2) {
+  width: 100px; /* Adjust the width to your desired value */
+  overflow: hidden; /* Hide any overflow content */
+  text-overflow: ellipsis; /* Add ellipsis (...) for overflowed text */
+}

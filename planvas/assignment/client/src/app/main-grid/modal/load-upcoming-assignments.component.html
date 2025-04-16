@@ -1,0 +1,21 @@
+<div class="load-upcoming-assignments">
+
+  <div class="modal-header">
+    <h5 class="modal-title">List of Upcoming Assignments</h5>
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            (click)="cancel()"></button>
+  </div>
+
+  <div class="modal-body">
+    <div *ngFor="let assignment of upcomingAssignments"
+         class="row">
+      <!-- Use a date pipe to format the date for display. -->
+      <!-- See https://v13.angular.io/api/common/DatePipe. -->
+      <div class="col-auto ms-4">{{ assignment.date | date: dateTimeFormat }}</div>
+      <div class="col-auto">{{ assignment.subject }}</div>
+    </div>
+  </div>
+
+</div>

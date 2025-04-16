@@ -1,0 +1,46 @@
+<div class="todo-container" [class.minimized]="isMinimized">    
+  <h1 *ngIf="!isMinimized" class="title">Planvas</h1>
+    <button class="minimize-btn" (click)="toggleMinimize()">&times;</button>
+    <div class="sidebar" [class.minimized]="isMinimized">     
+     <div class="sidebar-title">  
+      <h3>Assignments</h3>
+      <div class="pagination-controls">
+        <button (click)="setPage(page - 1)" [disabled]="onFirstPage()">
+          <fa-icon [icon]="icons.faAngleLeft"></fa-icon> Previous
+        </button>
+        <span>Page {{ page }} of {{ totalPages }}</span>
+        <button (click)="setPage(page + 1)" [disabled]="onLastPage()">
+          Next <fa-icon [icon]="icons.faAngleRight"></fa-icon>
+        </button>
+      </div>
+    </div>
+      <div class="assignment-table">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" class="header-purple">Date</th>
+              <th scope="col" class="header-purple">Subject</th>
+              <th scope="col" class="header-purple">Details</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let assignment of assignments" [class.completed]="assignment.completed" (click)="toggleAssignment(assignment)">
+            <td><input type="checkbox" [checked]="assignment.selected" /></td>
+            <td>{{ assignment.date | date: dateFormat }}</td>
+            <td>{{ assignment.subject }}</td>
+            <td>{{ assignment.details || '' }}</td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+  <div class="controls">
+      <button class="btn" (click)="addNewAssignment()">Add</button>
+      <button class="btn" (click)="removeAssignments()" [disabled]="noneSelected()">Remove</button>
+      <button class="btn" (click)="completeAssignments()" [disabled]="noneSelected()">Complete</button>
+      <button class="btn" (click)="openFileDialog()">Import</button>
+    </div>
+    <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".ics" style="display:none" />
+    </div>
+    <button class="plus-btn" (click)="toggleMinimize()">+</button> <!-- Only visible when minimized -->
+</div>

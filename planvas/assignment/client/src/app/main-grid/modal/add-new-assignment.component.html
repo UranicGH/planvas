@@ -1,0 +1,98 @@
+<div class="add-new-assignment">
+
+  <div class="modal-header">
+    <h5 class="modal-title">Add New Assignment</h5>
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            (click)="cancel()"></button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="addFormGroup"
+          class="container-fluid">
+      <div class="row mb-3">
+        <div class="col">
+          <label for="add-new-assignment-date"
+                 class="form-label">
+            Date
+          </label>
+          <!-- When using the "bsDatepicker" directive, make sure    -->
+          <!-- not to accidentally capitalize the "p". Angular       -->
+          <!-- will not warn you that it is incorrect.  However,     -->
+          <!-- "bsConfig" will cause errors because it expects       -->
+          <!-- a properly-written "bsDatepicker" attribute to exist. -->
+          <!-- Setting autocomplete="off" will prevent suggestions   -->
+          <!-- previous value from covering up part of the picker.   -->
+          <input type="text"
+                 id="add-new-assignment-date"
+                 class="form-control"
+                 formControlName="date"
+                 bsDatepicker
+                 [bsConfig]="dateConfig"
+                 autocomplete="off">
+        </div>
+
+        <div class="col">
+          <label for="add-new-assignment-time"
+                 class="form-label">
+            Time
+          </label>
+          <select id="add-new-assignment-time"
+                  class="form-select"
+                  formControlName="time">
+            <option *ngFor="let timeOption of timeOptions"
+                    [value]="timeOption.val">
+              {{ timeOption.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <label for="add-new-assignment-subject"
+                 class="form-label">
+            subject
+          </label>
+          <input type="text"
+                 id="add-new-assignment-subject"
+                 class="form-control"
+                 formControlName="subject"
+                  required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="add-new-assignment-details"
+                 class="form-label">
+            details
+          </label>
+          <textarea id="add-new-assignment-details"
+                    class="form-control"
+                    rows="3"
+                    formControlName="details"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary"
+            (click)="cancel()">Cancel</button>
+    <button class="btn btn-primary"
+            (click)="save()"
+            [disabled]="!saveEnabled()">Save</button>
+  </div>
+  <div id = "errorModal" class="modal-body container" *ngIf = "errorModal">
+    <div class="alert alert-warning d-flex">
+      <div class="me-2 align-self-center">
+        <fa-icon [icon]="icons.faWarning"
+                 size="3x"></fa-icon>
+      </div>
+      <span class = "close" (click)="closeErrMod()"></span>
+      <div class="align-self-center">
+        <p>{{ errMsg }}</p>
+      </div>
+    </div>
+  </div>
+</div>

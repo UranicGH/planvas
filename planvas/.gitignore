@@ -1,0 +1,59 @@
+# Temporary output from Maven
+target/
+build/
+
+# Gradle temp directory
+.gradle/
+
+# Temporary output from TestNG
+test-output/
+temp-testng-customsuite.xml
+
+# Intellij IDEA files
+*.iml
+*.ipr
+*.iws
+.idea
+
+# Eclipse files
+.classpath
+.wtpmodules
+.project
+.checkstyle
+.settings/
+.externalToolBuilders/
+maven-eclipse.xml
+
+# Hsql
+hsqldb-2.7.4/
+# Mac OS
+.DS_Store
+
+# Libraries and temporary files from editors
+*.o
+*.lo
+*.la
+\#*#
+.*.rej
+*.rej
+.*~
+*~
+.#*
+*.swp
+*.log
+
+# Build recipes
+Capfile
+Rakefile
+
+#JRebel
+rebel.xml
+
+#Database symlink
+/d
+
+#Repository
+/maven2/repository
+
+# Generated project file
+requireMap.js

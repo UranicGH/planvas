@@ -1,0 +1,40 @@
+<div class="calendar-grid">
+  <div class="calendar-container">
+    <!-- Calendar Header -->
+    <div id="calendar-header">
+      <button class="prev-month" (click)="prevMonth()">&lt;</button>
+      <h2 id="calendar-title">{{ calendarTitle }}</h2>
+      <button class="next-month" (click)="nextMonth()">&gt;</button>
+    </div>
+    <!-- Days of the Week -->
+    <div id="calendar-weekdays">
+      <div class="weekday">Sun</div>
+      <div class="weekday">Mon</div>
+      <div class="weekday">Tue</div>
+      <div class="weekday">Wed</div>
+      <div class="weekday">Thu</div>
+      <div class="weekday">Fri</div>
+      <div class="weekday">Sat</div>
+    </div>
+    <!-- Calendar Days -->
+    <div id="calendar-days">
+      <div
+        *ngFor="let day of calendarDays"
+        class="calendar-day"
+        [class.inactive]="!day.isCurrentMonth"
+      >
+        <!-- Render the day -->
+        <span>{{ day.day }}</span>
+
+        <!-- Render assignments if any -->
+        <div *ngIf="day.assignments && day.assignments.length > 0" class="assignments">
+          <ul>
+            <li *ngFor="let assignment of day.assignments">
+              {{ assignment.subject }}
+            </li>
+          </ul>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>

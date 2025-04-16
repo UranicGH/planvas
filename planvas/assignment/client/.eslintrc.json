@@ -1,0 +1,165 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "plugins": [
+    "import",
+    "jasmine"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "env": {
+    "browser": true
+  },
+  "overrides": [{
+    "files": [
+      "*.ts",
+      "*.js"
+    ],
+    "parserOptions": {
+      "project": [
+        "*/tsconfig.json"
+      ],
+      "createDefaultProgram": true
+    },
+    "extends": [
+      "plugin:@angular-eslint/recommended",
+      "plugin:@angular-eslint/template/process-inline-templates"
+    ],
+    "rules": {
+      "@angular-eslint/directive-selector": ["error", {
+        "type": "attribute",
+        "prefix": "planvas",
+        "style": "camelCase"
+      }],
+      "@angular-eslint/component-selector": ["error", {
+        "type": "element",
+        "prefix": "planvas",
+        "style": "kebab-case"
+      }],
+      "import/order": ["error", {
+        "alphabetize": {
+          "caseInsensitive": true,
+          "order": "asc"
+        },
+        "groups": [
+          ["external", "builtin"],
+          "internal",
+          ["sibling", "parent"],
+          "index"
+        ],
+        "newlines-between": "always"
+      }],
+      "object-curly-spacing": ["error", "always"],
+      "no-trailing-spaces": "error",
+      "indent": ["error", 2, {
+        "ignoredNodes": [
+          "ConditionalExpression"
+        ],
+        "SwitchCase": 1,
+        "offsetTernaryExpressions": true
+      }],
+      "no-magic-numbers": ["error", {
+        "ignoreArrayIndexes": true,
+        "ignore": [0, -1, 1]
+      }],
+      "no-shadow": ["error", {
+        "builtinGlobals": true
+      }],
+      "array-callback-return": ["error", {
+        "checkForEach": true
+      }],
+      "array-bracket-spacing": "off",
+      "block-scoped-var": "error",
+      "brace-style": ["error", "1tbs", {
+        "allowSingleLine": true
+      }],
+      "comma-dangle": "error",
+      "comma-spacing": "error",
+      "consistent-return": "error",
+      "curly": ["error", "multi-line"],
+      "dot-location": ["error", "property"],
+      "dot-notation": "error",
+      "eqeqeq": ["error", "smart"],
+      "guard-for-in": "error",
+      "keyword-spacing": "error",
+      "new-parens": "error",
+      "no-alert": "error",
+      "no-array-constructor": "error",
+      "no-catch-shadow": "error",
+      "no-empty-character-class": "error",
+      "no-extra-bind": "error",
+      "no-implicit-coercion": "error",
+      "no-implied-eval": "error",
+      "no-label-var": "error",
+      "no-labels": "error",
+      "no-lonely-if": "error",
+      "no-loop-func": "error",
+      "no-multi-str": "error",
+      "no-multi-spaces": ["error", {
+        "exceptions": {
+          "Property": true,
+          "ImportDeclaration": true
+        }
+      }],
+      "no-native-reassign": "error",
+      "no-new-func": "error",
+      "no-new-wrappers": "error",
+      "no-octal-escape": "error",
+      "no-return-assign": "error",
+      "no-self-compare": "error",
+      "no-sequences": "error",
+      "no-shadow-restricted-names": "error",
+      "no-spaced-func": "error",
+      "no-throw-literal": "error",
+      "no-unneeded-ternary": "error",
+      "no-unused-expressions": "error",
+      "no-unused-vars": [ "error", {
+        "args": "none",
+        "vars": "local"
+      }],
+      "no-useless-call": "error",
+      "no-useless-concat": "error",
+      "no-with": "error",
+      "quotes": ["error", "single", {
+        "avoidEscape": true
+      }],
+      "semi": ["error", "always"],
+      "semi-spacing": "error",
+      "space-infix-ops": "error",
+      "valid-jsdoc": ["error", {
+        "requireParamDescription": false,
+        "requireParamType": false,
+        "requireReturnType": false,
+        "requireReturn": false
+      }],
+      "no-console": "off"
+    }
+  }, {
+    "files": [
+      "*.spec.ts",
+      "*.spec.js"
+    ],
+    "env": {
+      "jasmine": true
+    },
+    "extends": [
+      "plugin:jasmine/recommended"
+    ],
+    "rules": {
+      "jasmine/new-line-before-expect": "off"
+    }
+  }, {
+    "files": [
+      "*.html"
+    ],
+    "extends": [
+      "plugin:@angular-eslint/template/recommended"
+    ],
+    "rules": {}
+  }]
+}

@@ -1,0 +1,182 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.calendar-grid {
+  height:100%;
+  flex: 1; /* Take up remaining space */
+  /*flex-grow:1;*/
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: #f4f4f4;
+  width:100%;
+  box-sizing: border-box; /* Include padding in the width/height calculations */
+}
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow:1;
+  height:100%;
+  width:100%;
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Include padding and borders in width calculation */
+}
+
+/* Header Styles */
+#calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  width:100%;
+}
+
+#calendar-header h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+/* Weekday Styles */
+#calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 equal columns for weekdays */
+  grid-auto-columns: 1fr; /* Rows adjust to fill space */
+  text-align: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.weekday {
+  padding: 5px;
+}
+
+/* Calendar Days Styles */
+#calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
+  grid-auto-rows: 1fr; /* Adjust rows to fill space evenly */
+  gap: 0.5rem; /* Add space between cells */
+  height: 86.5%; /* Allow grid to expand dynamically */
+}
+
+#calendar-days div {
+  display: flex;
+  font-size: 1em;
+  color: #343a40;
+  flex-direction: column; /* Stack day number and assignments */
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  padding: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  box-sizing: border-box; /* Include padding in the width/height calculations */
+  position: relative; /* For containing absolute elements */
+
+}
+
+#calendar-days div:hover {
+  background-color: #7a5cff;
+  color:rgb(52, 58, 64);
+  transform: scale(1.05);
+}
+
+.calendar-day.inactive {
+  background-color: #7a5cff;
+  color: #cad0d6;
+  cursor: default; /* Remove pointer events for inactive days */
+  border:none;
+  opacity:0.5;
+}
+
+.calendar-day.inactive:hover {
+  transform: none;
+  color: #cad0d6;
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top */
+  align-items: flex-start; /* Align items to the left */
+  background-color: #ffffff;
+  border: 1px solid #979494;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem; /* Add space around content */
+  overflow: hidden; /* Prevent content from spilling out */
+  box-sizing: border-box; /* Include padding and border in size calculations */
+  position: relative; /* For child element positioning */
+}
+
+.prev-month{
+  background-color: #7a5cff;
+  border-radius: 4px;
+  opacity: 0.8;
+  border: none;
+}
+.next-month{
+  background-color: #7a5cff;
+  border-radius: 4px;
+  opacity: 0.8;
+  border: none;
+}
+.assignments {
+  width: 100%;
+  overflow: hidden; /* Hide overflowing events */
+  display: flex;
+  max-height: 75%; /* Limit to 50% of the parent height */
+  flex-direction: column;
+  gap: 2px; /* Add spacing between list items */
+  flex-shrink: 0; /* Prevent shrinking */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+
+}
+
+.assignments ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  overflow: hidden; /* Hide overflowing items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+
+}
+
+.assignments li {
+  margin: 2px 0; /* Small margin between events */
+  font-size: 10px;
+  white-space: nowrap; /* Prevent wrapping */
+  text-overflow: ellipsis; /* Add ellipses for overflowing text */
+  overflow: hidden; /* Hide overflowing text */
+  padding: 2px 4px;
+  border: 1px solid #979494;
+  border-radius: 3px;
+  background-color: #f8f9fa;
+  box-sizing: border-box; /* Include padding and border in size */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+
+}
+
+/* Ellipses for hidden assignments */
+.assignments:after {
+  content: '...'; /* Indicate hidden content */
+  display: block;
+  text-align: center;
+  color: #555;
+  font-size: 12px;
+  font-style: italic;
+  margin-top: auto;
+  pointer-events: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+
+}

@@ -1,0 +1,159 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+plugins {
+  id 'java'
+  id 'war'
+  id 'idea'
+}
+
+repositories {
+  maven {
+    url 'https://services.gradle.org/distributions/gradle-7.1.1-bin.zip'
+    allowInsecureProtocol = true
+  }
+  mavenCentral()
+}
+
+ext {
+  /* dependencies */
+  apacheCommonsLangVersion = '3.12.0'
+  guiceVersion = '4.2.3'
+  guiceBridgeVersion = '2.6.1'
+  hsqldbVersion = '2.7.4'
+  jacksonVersion = '2.12.4'
+  jerseyVersion = '2.30.1'
+  jodaTimeVersion = '2.10.10'
+  logbackVersion = '1.2.10'
+  servletApiVersion = '3.0.1'
+  slf4jVersion = '1.7.35'
+  typesafeVersion = '1.4.1'
+  urlRewriteVersion = '4.0.4'
+
+  /* test dependencies */
+  mockitoVersion = '1.10.19'
+  testNgVersion = '7.3.0'
+}
+
+dependencies {
+
+  /*******************************/
+  /* Implementation Dependencies */
+  /*******************************/
+
+  /* Apache Commons Lang */
+  implementation "org.apache.commons:commons-lang3:${apacheCommonsLangVersion}"
+
+  /* Guice */
+  implementation "com.google.inject:guice:${guiceVersion}"
+
+  /* Guice Bridge */
+  implementation "org.glassfish.hk2:guice-bridge:${guiceBridgeVersion}"
+
+  /* HSQLDB */
+  implementation "org.hsqldb:hsqldb:${hsqldbVersion}"
+
+  /* Jackson */
+  implementation "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:${jacksonVersion}"
+  implementation "com.fasterxml.jackson.datatype:jackson-datatype-guava:${jacksonVersion}"
+
+  /* Jersey */
+  implementation "org.glassfish.jersey.containers:jersey-container-servlet:${jerseyVersion}"
+  implementation "org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}"
+  implementation("org.glassfish.jersey.ext:jersey-mvc-jsp:${jerseyVersion}") {
+    exclude group: 'javax.servlet', module: 'servlet-api'
+  }
+  implementation "org.glassfish.jersey.inject:jersey-hk2:${jerseyVersion}"
+
+  /* Joda-Time */
+  implementation "joda-time:joda-time:${jodaTimeVersion}"
+
+  /* Logback */
+  implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+
+  /* SLF4J */
+  implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+
+  /* Typesafe Config */
+  implementation "com.typesafe:config:${typesafeVersion}"
+
+  /* UrlRewriteFilter */
+  implementation "org.tuckey:urlrewritefilter:${urlRewriteVersion}"
+
+  /*********************************/
+  /* Provided Compile Dependencies */
+  /*********************************/
+
+  /* Servlet */
+  providedCompile "javax.servlet:javax.servlet-api:${servletApiVersion}"
+
+  /************************************/
+  /* Test Implementation Dependencies */
+  /************************************/
+
+  /* Mockito */
+  testImplementation "org.mockito:mockito-all:${mockitoVersion}"
+
+  /* TestNG */
+  testImplementation "org.testng:testng:${testNgVersion}"
+}
+
+// Display test results.
+// Borrowed from https://stackoverflow.com/a/36130467/2449731.
+tasks.withType(Test) {
+  testLogging {
+    // set options for log level LIFECYCLE
+    events TestLogEvent.FAILED,
+           TestLogEvent.PASSED,
+           TestLogEvent.SKIPPED,
+           TestLogEvent.STANDARD_OUT
+    exceptionFormat TestExceptionFormat.FULL
+    showExceptions true
+    showCauses true
+    showStackTraces true
+
+    // set options for log level DEBUG and INFO
+    debug {
+      events TestLogEvent.STARTED,
+             TestLogEvent.FAILED,
+             TestLogEvent.PASSED,
+             TestLogEvent.SKIPPED,
+             TestLogEvent.STANDARD_ERROR,
+             TestLogEvent.STANDARD_OUT
+      exceptionFormat TestExceptionFormat.FULL
+    }
+    info.events = debug.events
+    info.exceptionFormat = debug.exceptionFormat
+
+    afterSuite { desc, result ->
+      if (!desc.parent) { // will match the outermost suite
+        def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+        def startItem = '|  ', endItem = '  |'
+        def repeatLength = startItem.length() + output.length() + endItem.length()
+        println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+      }
+    }
+  }
+
+}
+
+test {
+  useTestNG() {
+    useDefaultListeners = true
+  }
+}
+
+war {
+  dependsOn test
+  // Make sure to build the client webjar so that it can be
+  // packed into the war.
+  dependsOn(":assignment:client:jar")
+
+  // Set the name of the output file.
+  archiveFileName.set 'assignment.war'
+
+  // Grab the webjar from the client project and include it.
+  from("${project(':assignment:client').buildDir}/libs") {
+    into('WEB-INF/lib')
+  }
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+        "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+
+<!--
+  Configuration file for UrlRewriteFilter
+  http://www.tuckey.org/urlrewrite/
+
+  This is the configuration for a web filter which will
+  rewrite URLs before they get to the server code.
+-->
+<urlrewrite>
+
+  <rule>
+    <subject>Ignore-api</subject>
+    <note>
+      Do not change /api requests.
+    </note>
+    <from>^/api(/.*)?$</from>
+    <to last="true">-</to>
+  </rule>
+
+  <rule>
+    <subject>Ignore-WEB-INF</subject>
+    <note>
+      Do not change /WEB-INF requests.
+    </note>
+    <from>^/WEB-INF(/.*)?$</from>
+    <to last="true">-</to>
+  </rule>
+
+  <rule>
+    <subject>Ignore-webjars</subject>
+    <note>
+      Do not change /webjars requests.
+    </note>
+    <from>^/webjars(/.*)?$</from>
+    <to last="true">-</to>
+  </rule>
+
+  <rule>
+    <subject>Forward-Everything-Else</subject>
+    <note>
+      Forward all other requests to /api/views.
+    </note>
+    <from>^(/.*)?$</from>
+    <to last="true">/api/views</to>
+  </rule>
+
+</urlrewrite>

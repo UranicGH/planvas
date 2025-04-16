@@ -1,0 +1,60 @@
+plugins {
+  id 'java' // Used for creating jars.
+  id 'com.moowork.node' version '1.3.1' // Used for executing node scripts.
+}
+
+group 'planvas.assignment'
+version '0.1.0-SNAPSHOT'
+
+ext {
+  /* Determine if working with a snapshot. */
+  isSnapshot = version.endsWith('SNAPSHOT')
+
+  /* The path in which generated files will be stored. */
+  webjarPath = "webjars/${archivesBaseName}/"
+}
+
+node {
+  /* https://github.com/srs/gradle-node-plugin/blob/master/docs/node.md#configuring-the-plugin */
+  download = false
+}
+
+task npmLint(type: NpmTask) {
+  args = ['run', 'lint']
+}
+
+task npmTest(type: NpmTask) {
+  args = ['run', 'test']
+}
+
+/**
+ * If npm_install is running slow, check the npm config.  It should be:
+ *   package-lock=true
+ */
+task npmBuild(type: NpmTask) {
+  dependsOn npmInstall
+  dependsOn npmLint
+  dependsOn npmTest
+  npmLint.mustRunAfter npmInstall
+  npmTest.mustRunAfter npmInstall
+  args = ['run', 'build', '--', "--deploy_url=${webjarPath}"]
+  if (isSnapshot) {
+    args << '--configuration=development'
+  }
+}
+
+build.dependsOn npmBuild
+
+/**
+ * Gather the built sources and package them into a JAR file.
+ * This will be our client 'webjar'.
+ */
+jar {
+  dependsOn npmBuild
+  if (isSnapshot) {
+    from 'dist/assignment-client/snapshot'
+  } else {
+    from 'dist/assignment-client/production'
+  }
+  into "META-INF/resources/${webjarPath}"
+}

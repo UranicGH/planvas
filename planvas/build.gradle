@@ -1,0 +1,12 @@
+task build(type: Copy) {
+  // Build the server war before copying it to root build directory.
+  dependsOn('assignment:server:war')
+
+  from(project('assignment:server').buildDir)
+  into project.buildDir
+  include "libs/**"
+}
+
+task clean {
+  delete project.buildDir
+}

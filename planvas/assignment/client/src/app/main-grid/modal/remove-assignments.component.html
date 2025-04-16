@@ -1,0 +1,44 @@
+<div class="remove-assignments">
+
+  <div class="modal-header">
+    <h5 class="modal-title">Remove Selected Assignments(s)</h5>
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            (click)="cancel()"></button>
+  </div>
+
+  <div class="modal-body container">
+    <div class="alert alert-warning d-flex">
+      <div class="me-2 align-self-center">
+        <!-- Font Awesome -->
+        <fa-icon [icon]="icons.faWarning"
+                 size="3x"></fa-icon>
+      </div>
+      <div class="align-self-center">
+        Are you sure you want to remove the selected assignment(s)?
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Selected:</label>
+      </div>
+    </div>
+    <div *ngFor="let assignment of assignments"
+         class="row">
+      <!-- Use a date pipe to format the date for display. -->
+      <!-- See https://v13.angular.io/api/common/DatePipe. -->
+      <div class="col-auto ms-4">{{ assignment.date | date:dateTimeFormat }}</div>
+      <div class="col-auto">{{ assignment.subject }}</div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary"
+            (click)="cancel()">Cancel</button>
+    <button class="btn btn-danger"
+            (click)="confirm()">Confirm</button>
+  </div>
+
+</div>

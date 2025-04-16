@@ -1,0 +1,6 @@
+rootProject.name = 'assignment'
+
+// Make sure that the subprojects are included so that
+// they can be executed from the project root.
+include 'assignment:server'
+include 'assignment:client'

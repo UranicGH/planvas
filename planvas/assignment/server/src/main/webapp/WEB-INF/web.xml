@@ -1,0 +1,78 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="3.0">
+
+    <!-- Url Rewrite Filter -->
+    <!-- See https://tuckey.org/urlrewrite/manual/4.0/index.html. -->
+
+    <filter>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+        <init-param>
+            <param-name>confReloadCheckInterval</param-name>
+            <param-value>-1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>confPath</param-name>
+            <param-value>/WEB-INF/urlrewrite.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>logLevel</param-name>
+            <param-value>slf4j</param-value>
+        </init-param>
+        <init-param>
+            <param-name>statusPath</param-name>
+            <param-value>/rewrite-status</param-value>
+        </init-param>
+        <init-param>
+            <param-name>statusEnabled</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>statusEnabledOnHosts</param-name>
+            <param-value>localhost, local, 127.0.0.1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>modRewriteConf</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>modRewriteConfText</param-name>
+            <param-value></param-value>
+        </init-param>
+        <init-param>
+            <param-name>allowConfSwapViaHttp</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <!-- Assignment Application -->
+
+    <servlet>
+        <servlet-name>Assignment Application</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>planvas.assignment.config.AssignmentApplication</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>org.codehaus.jackson.jaxrs</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Assignment Application</servlet-name>
+        <!-- This means that the application will handle any request made -->
+        <!-- to the {context}/api/ path. The UrlRewriteFilter will rewrite -->
+        <!-- other requests to be handled by the appropriate /api path. -->
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>
